@@ -164,3 +164,36 @@ FROM videogames
 JOIN category_videogame ON videogames.id = category_videogame.videogame_id
 JOIN categories ON category_videogame.category_id = categories.id
 ORDER BY videogames.name ASC;
+
+/*
+4- Selezionare i dati di tutte le software house che hanno rilasciato almeno un gioco dopo il 2020, mostrandoli una sola volta (6)
+*/
+
+SELECT DISTINCT software_houses.name, software_houses.tax_id, software_houses.city, software_houses.country
+FROM software_houses
+JOIN videogames ON software_houses.id = videogames.software_house_id
+WHERE YEAR(videogames.release_date) > 2020;
+
+/*
+5- Selezionare i premi ricevuti da ogni software house per i videogiochi che ha prodotto (55)
+*/
+
+SELECT awards.name, software_houses.name
+FROM awards
+JOIN award_videogame ON awards.id = award_videogame.award_id
+JOIN videogames ON award_videogame.videogame_id = videogames.id
+JOIN software_houses ON videogames.software_house_id = software_houses.id;
+
+/*
+6- Selezionare categorie e classificazioni PEGI dei videogiochi che hanno ricevuto recensioni da 4 e 5 stelle, mostrandole una sola volta (3363)
+*/
+
+SELECT DISTINCT videogames.name, categories.name, pegi_labels.name
+FROM categories
+JOIN category_videogame ON categories.id = category_videogame.category_id
+JOIN videogames ON category_videogame.videogame_id = videogames.id
+JOIN pegi_label_videogame ON videogames.id = pegi_label_videogame.videogame_id
+JOIN pegi_labels ON pegi_label_videogame.pegi_label_id = pegi_labels.id
+JOIN reviews ON videogames.id = reviews.videogame_id
+WHERE reviews.rating BETWEEN 4 AND 5;
+
