@@ -164,7 +164,3 @@ FROM videogames
 JOIN category_videogame ON videogames.id = category_videogame.videogame_id
 JOIN categories ON category_videogame.category_id = categories.id
 ORDER BY videogames.name ASC;
-
-
-
-
