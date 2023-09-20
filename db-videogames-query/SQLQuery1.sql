@@ -132,39 +132,3 @@ SELECT videogame_id, AVG(rating) as avarage_rating
 FROM reviews
 GROUP BY videogame_id
 ORDER BY avarage_rating DESC;
-
-/*
-----------------------------------------------------------
-*/
-
-/*
-1- Selezionare i dati di tutti giocatori che hanno scritto almeno una recensione, mostrandoli una sola volta (996)
-*/
-
-SELECT DISTINCT players.name, players.lastname, players.nickname, players.city
-FROM players
-JOIN reviews ON players.id = reviews.player_id;
-
-/*
-2- Sezionare tutti i videogame dei tornei tenuti nel 2016, mostrandoli una sola volta (226)
-*/
-
-SELECT DISTINCT videogames.name
-FROM videogames
-JOIN tournament_videogame ON videogames.id = tournament_videogame.videogame_id
-JOIN tournaments ON tournament_videogame.tournament_id = tournaments.id
-WHERE tournaments.year = 2016;
-
-/*
-3- Mostrare le categorie di ogni videogioco (1718)
-*/
-
-SELECT videogames.name, categories.name
-FROM videogames
-JOIN category_videogame ON videogames.id = category_videogame.videogame_id
-JOIN categories ON category_videogame.category_id = categories.id
-ORDER BY videogames.name ASC;
-
-
-
-
