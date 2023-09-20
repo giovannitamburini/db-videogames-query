@@ -197,3 +197,43 @@ JOIN pegi_labels ON pegi_label_videogame.pegi_label_id = pegi_labels.id
 JOIN reviews ON videogames.id = reviews.videogame_id
 WHERE reviews.rating BETWEEN 4 AND 5;
 
+/*
+7- Selezionare quali giochi erano presenti nei tornei nei quali hanno partecipato i giocatori il cui nome inizia per 'S' (474)
+*/
+SELECT DISTINCT videogames.name
+FROM videogames
+JOIN tournament_videogame ON videogames.id = tournament_videogame.videogame_id
+JOIN tournaments ON tournament_videogame.tournament_id = tournaments.id
+JOIN player_tournament ON tournaments.id = player_tournament.tournament_id
+JOIN players ON player_tournament.player_id = players.id
+WHERE players.name LIKE 'S%';
+
+/*
+8- Selezionare le città in cui è stato giocato il gioco dell'anno del 2018 (36)
+fare presente la consegna ambigua
+*/
+
+SELECT DISTINCT tournaments.city
+FROM awards
+JOIN award_videogame ON awards.id = award_videogame.award_id
+JOIN videogames ON award_videogame.videogame_id = videogames.id
+JOIN tournament_videogame ON videogames.id = tournament_videogame.videogame_id
+JOIN tournaments ON tournament_videogame.tournament_id = tournaments.id
+JOIN player_tournament ON tournaments.id = player_tournament.tournament_id
+JOIN players ON player_tournament.player_id = players.id
+WHERE award_videogame.year = 2018 AND award_videogame.award_id = 1;
+
+/*
+9- Selezionare i giocatori che hanno giocato al gioco più atteso del 2018 in un torneo del 2019 (3306)
+chiarimento sul distinct per i giocatori?
+*/
+
+SELECT players.name
+FROM players
+JOIN player_tournament ON players.id = player_tournament.player_id
+JOIN tournaments ON player_tournament.tournament_id = tournaments.id
+JOIN tournament_videogame ON tournaments.id = tournament_videogame.tournament_id
+JOIN videogames ON tournament_videogame.videogame_id = videogames.id
+JOIN award_videogame ON videogames.id = award_videogame.videogame_id
+JOIN awards ON award_videogame.award_id = awards.id
+WHERE award_videogame.year = 2018 AND award_videogame.award_id = 5 AND tournaments.year = 2019;
