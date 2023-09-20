@@ -77,3 +77,15 @@ WHERE YEAR(release_date) = 2020;
 SELECT DISTINCT videogame_id
 FROM reviews
 WHERE rating = 5;
+
+/*
+--------------------------------------------------------------------------------
+*/
+
+/*
+1- Contare quante software house ci sono per ogni paese (3)
+*/
+
+SELECT COUNT(*)
+FROM software_houses
+GROUP BY country;
